@@ -15,20 +15,18 @@ document.getElementById("csvFile").addEventListener("change", function (e) {
         skipEmptyLines: true,
       }).data;
 
-      //   random Id
-      const Id = function generateRandomID() {
-        return Math.floor(100000 + Math.random() * 900000); // Ensures a 6-digit number
+      // Function to generate a unique ID
+      const generateUniqueID = () => {
+        return Math.floor(100000 + Math.random() * 900000);
       };
 
-      console.log(jsonData); // Display the JSON data in console
+      // console.log(jsonData);
 
-      // Button click to render data
       btn.addEventListener("click", () => {
-        // Clear the container before adding new content
         gridsContainer.innerHTML = "";
 
-        // Append the data row by row
         jsonData.forEach((item) => {
+          const uniqueID = generateUniqueID(); // Generate a new unique ID for each student
           const htmlData = `
             <div class="grid">
               <div class="header">
@@ -38,12 +36,15 @@ document.getElementById("csvFile").addEventListener("change", function (e) {
                   <div class="verified">Verified ✔</div>
                 </div>
               </div>
-              <div class="code">${Id}</div>
               <div class="student-details">
                 <div class="student-name">${item.Name}</div>
                 <div class="level">${item.Level}</div>
                 <div class="Specialty">${item.Specialty}</div>
-                <div class="category">${item.Category}</div>
+                <div class="id"> <img src="img/qr.png"/> ${uniqueID}</div>
+              </div>
+              <div class="footer">
+                <div class="category"> ${item.Category}</div>
+                <div class="signature"><p>Sign here</p> <div class="line"></div></div>
               </div>
             </div>`;
           // Append each generated HTML block to the grids container
@@ -54,4 +55,3 @@ document.getElementById("csvFile").addEventListener("change", function (e) {
     reader.readAsText(file);
   }
 });
-// console.log(Id);

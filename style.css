@@ -11,10 +11,11 @@ img {
 body {
   font-size: 1em;
   font-family: roboto;
+  padding: 1em;
 }
 .container {
-  width: min(100% - 4rem, 1200px);
-  margin: 0 auto;
+  text-align: center;
+  /* background-color: #f1f1f1; */
 }
 .grids {
   padding: 1em;
@@ -26,7 +27,7 @@ body {
   padding: 1em;
   border: 1px solid #999;
   border-radius: 4px;
-  height: 300px;
+  height: 295px;
   display: flex;
   gap: 1em;
   justify-content: space-between;
@@ -67,6 +68,9 @@ img {
     background-color: #f1f1f1;
     border: 1px solid #b6b7b6;
     border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
   }
 }
 .code {
@@ -74,10 +78,14 @@ img {
   /* background-color: red; */
   border-radius: 4px;
 }
+input {
+  cursor: pointer;
+}
 .btn {
   background-color: rgb(18, 106, 200);
   padding: 0.5em 1em;
   border: none;
+  cursor: pointer;
   outline: none;
   color: white;
   margin-top: 1em;
@@ -85,8 +93,46 @@ img {
 }
 
 @media print {
-  input,
+  body {
+    padding: 0;
+  }
+  /* input,
   button {
     display: none;
+  } */
+  .container {
+    display: none;
   }
+}
+.footer {
+  display: flex;
+  justify-content: space-between;
+}
+.category {
+  font-size: 3em;
+  font-weight: bold;
+}
+.id {
+  display: flex;
+  align-items: center;
+  gap: 0.25em;
+  align-items: flex-start;
+  /* flex-direction: column; */
+
+  img {
+    width: 20px;
+  }
+}
+.signature {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* background-color: red; */
+  gap: 0.25em;
+}
+
+.line {
+  height: 2px;
+  border-radius: 10px;
+  background-color: #000;
 }
