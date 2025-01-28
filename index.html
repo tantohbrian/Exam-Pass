@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Upload Excel, Display, and Download PDF</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.19/jspdf.plugin.autotable.min.js"></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+
+      th,
+      td {
+        border: 1px solid #ccc;
+        padding: 8px;
+        text-align: left;
+      }
+
+      th {
+        background-color: #f4f4f4;
+      }
+
+      tr:not(:first-child):hover {
+        background-color: #f4f4f4;
+      }
+
+      .container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        margin-top: 20px;
+      }
+
+      .grid-item {
+        border: 1px solid #ccc;
+        padding: 15px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 250px;
+      }
+
+      .grid-item img {
+        width: 100px;
+        height: 100px;
+        object-fit: contain;
+        margin-bottom: 15px;
+      }
+
+      .verified {
+        color: green;
+        font-weight: bold;
+        font-size: 14px;
+      }
+
+      @media print {
+        body {
+          margin: 0;
+        }
+
+        .container {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 20px;
+          margin-top: 20px;
+        }
+
+        .grid-item {
+          border: 1px solid #ccc;
+          padding: 15px;
+          text-align: center;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          height: 250px;
+        }
+
+        .grid-item img {
+          width: 100px;
+          height: 100px;
+          object-fit: contain;
+          margin-bottom: 15px;
+        }
+
+        .verified {
+          color: green;
+          font-weight: bold;
+          font-size: 14px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Upload and Display Excel Data</h1>
+    <input type="file" id="excelFile" accept=".xlsx, .xls" />
+    <button id="displayTableButton" disabled>Display Table</button>
+    <button id="downloadPdfButton" style="display: none">Download PDF</button>
+    <button id="printButton" style="display: none">Print</button>
+
+    <div id="printableArea">
+      <div class="container" id="gridContainer"></div>
+    </div>
+
+    <script>
+      let excelData = null;
+
+      // Event listener for file upload
+      document
+        .getElementById("excelFile")
+        .addEventListener("change", async (event) => {
+          const file = event.target.files[0];
+          if (!file) return;
+
+          // Parse the Excel file
+          const data = await file.arrayBuffer();
+          const workbook = XLSX.read(data, { type: "array" });
+
+          // Get the first sheet
+          const firstSheetName = workbook.SheetNames[0];
+          const worksheet = workbook.Sheets[firstSheetName];
+
+          // Convert sheet to JSON
+          excelData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+
+          // Enable the "Display Table" button
+          document.getElementById("displayTableButton").disabled = false;
+        });
+
+      // Event listener for the "Display Table" button
+      document
+        .getElementById("displayTableButton")
+        .addEventListener("click", () => {
+          if (!excelData) {
+            alert("No data to display. Please upload a valid Excel file.");
+            return;
+          }
+
+          // Display the grid
+          displayGrid(excelData);
+
+          // Show the "Download PDF" and "Print" buttons
+          document.getElementById("downloadPdfButton").style.display =
+            "inline-block";
+          document.getElementById("printButton").style.display = "inline-block";
+        });
+
+      // Event listener for the "Download PDF" button
+      document
+        .getElementById("downloadPdfButton")
+        .addEventListener("click", () => {
+          downloadPDF();
+        });
+
+      // Event listener for the "Print" button
+      document.getElementById("printButton").addEventListener("click", () => {
+        printPage();
+      });
+
+      // Function to display the grid of students
+      function displayGrid(data) {
+        const container = document.getElementById("gridContainer");
+        container.innerHTML = ""; // Clear existing grid
+
+        // Loop through the data and create grid items
+        data.forEach((row, index) => {
+          if (index % 6 === 0 && index !== 0) {
+            container.innerHTML += "<div style='clear: both;'></div>";
+          }
+
+          const gridItem = document.createElement("div");
+          gridItem.className = "grid-item";
+
+          gridItem.innerHTML = `
+            <img src="img/logo.jpg" alt="Logo" />
+            <p><strong>${row[0]}</strong></p>
+            <p>Specialty: ${row[1]}</p>
+            <p>Level: ${row[2]}</p>
+            <p>Category: ${row[3]}</p>
+            <p class="verified">Verified</p>
+          `;
+
+          container.appendChild(gridItem);
+        });
+      }
+
+      // Function to download the grid as PDF
+      function downloadPDF() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        const gridItems = document.querySelectorAll(".grid-item");
+
+        gridItems.forEach((gridItem, index) => {
+          if (index % 6 === 0 && index !== 0) {
+            doc.addPage();
+          }
+
+          // Add grid content to PDF
+          const logo = gridItem.querySelector("img");
+          const name = gridItem.querySelector("p strong").textContent;
+          const specialty =
+            gridItem.querySelector("p:nth-child(2)").textContent;
+          const level = gridItem.querySelector("p:nth-child(3)").textContent;
+          const category = gridItem.querySelector("p:nth-child(4)").textContent;
+          const verified = gridItem.querySelector(".verified").textContent;
+
+          doc.text(name, 10, 20);
+          doc.text(specialty, 10, 30);
+          doc.text(level, 10, 40);
+          doc.text(category, 10, 50);
+          doc.text(verified, 10, 60);
+
+          // Add logo image
+          doc.addImage(logo.src, "JPEG", 10, 10, 30, 30);
+        });
+
+        doc.save("StudentData.pdf");
+      }
+
+      // Function to print the page
+      function printPage() {
+        const printContent = document.getElementById("printableArea").innerHTML;
+        const originalContent = document.body.innerHTML;
+
+        // Temporarily modify the body content for printing
+        document.body.innerHTML = `
+          <div class="container">${printContent}</div>
+        `;
+
+        window.print();
+        document.body.innerHTML = originalContent;
+      }
+    </script>
+  </body>
+</html>
