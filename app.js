@@ -1,4 +1,4 @@
-const btn = document.querySelector(".btn");
+const btn = document.querySelector(".display");
 const gridsContainer = document.querySelector(".grids");
 
 // File input event
@@ -54,4 +54,9 @@ document.getElementById("csvFile").addEventListener("change", function (e) {
     };
     reader.readAsText(file);
   }
+});
+
+// print
+document.querySelector(".print").addEventListener("click", () => {
+  print();
 });
