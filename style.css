@@ -130,10 +130,13 @@ input[type="file"] {
     align-items: center;
     justify-content: flex-start;
     text-transform: capitalize;
+  text-align: center;
+    
   }
 }
 .student-name {
   font-weight: bold;
+  text-align: center;
 }
 .footer {
   display: flex;
