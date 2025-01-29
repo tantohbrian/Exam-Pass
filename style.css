@@ -23,11 +23,14 @@ body {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 2em;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 .grid {
   padding: 1em;
-  border: 1px solid #999;
+  border: 1px solid #c1c1c1;
   border-radius: 4px;
+  /* background: ; */
   height: 295px;
   display: flex;
   gap: 1em;
@@ -49,12 +52,19 @@ body {
 }
 
 .verified {
-  color: #345c24;
-  border: 1px solid #b4e5c0;
+  color: #31a989;
+  border: 1px solid #73ceb688;
   padding: 0.25em 0.5em;
-  background-color: #d4edda;
+  background-color: #45c9a61d;
   margin-top: 0.45em;
+  display: flex;
+  align-items: center;
+  gap: 0.25em;
   border-radius: 6px;
+
+  img {
+    width: 18px;
+  }
 }
 img {
   width: 70px;
@@ -109,6 +119,7 @@ input[type="file"] {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 0.25em;
+  font-size: 15px;
 
   > * {
     padding: 0.5em;
@@ -118,7 +129,11 @@ input[type="file"] {
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    text-transform: capitalize;
   }
+}
+.student-name {
+  font-weight: bold;
 }
 .footer {
   display: flex;
@@ -203,16 +218,17 @@ input[type="file"] {
 /* error */
 .opened {
   padding: 1em;
-  border: 1px solid rgb(246, 39, 80);
+  /* border: 1px solid rgb(246, 39, 80); */
+  border-left: 4px solid #dc1824;
   font-size: 1.1em;
-  background: rgba(172, 7, 40, 0.725);
-  color: rgb(255, 255, 255);
+  background: #fdd5d5;
+  color: #dc1824;
   width: min(400px, 100% - 4rem);
   position: fixed;
   left: 50%;
   top: 20px;
   transform: translateX(-50%);
-  border-radius: 5px;
+  border-radius: 1px 5px 5px 1px;
   backdrop-filter: blur(4px);
   z-index: 999;
   display: flex;
@@ -313,6 +329,7 @@ details[open] summary {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 2em;
+    width: 100%;
   }
   .grid {
     padding: 1em;
@@ -361,6 +378,7 @@ details[open] summary {
       justify-content: flex-start;
     }
   }
+
   .footer {
     display: flex;
     justify-content: space-between;

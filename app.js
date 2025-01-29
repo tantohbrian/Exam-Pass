@@ -20,23 +20,23 @@ document.getElementById("csvFile").addEventListener("change", function (e) {
         return Math.floor(100000 + Math.random() * 900000);
       };
 
-      // console.log(jsonData);
-      document.querySelector(".group").addEventListener("submit", (e) => {
-        e.preventDefault();
-      });
+      // document.querySelector(".group").addEventListener("submit", (e) => {
+      //   e.preventDefault();
+      // });
 
       btn.addEventListener("click", () => {
         gridsContainer.innerHTML = "";
 
         jsonData.forEach((item) => {
-          const uniqueID = generateUniqueID(); // Generate a new unique ID for each student
+          // Generate a new unique ID for each student
+          const uniqueID = generateUniqueID();
           const htmlData = `
             <div class="grid">
               <div class="header">
                 <div class="img-container"><img src="img/logo.jpg" alt="" /></div>
                 <div class="header-content">
                   <h2>Landmark Metropolitan University</h2>
-                  <div class="verified">Verified ✔</div>
+                  <div class="verified"><img src="img/tick.png"/> Verified</div>
                 </div>
               </div>
               <div class="student-details">
