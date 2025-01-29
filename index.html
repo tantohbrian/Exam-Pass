@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Exampass</title>
+    <link rel="stylesheet" href="style.css" />
+    <script defer src="app.js"></script>
+    <script defer src="create_pass.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="container">
+        <h2 class="heading">Exam Pass Generator</h2>
+        <form class="group">
+          <input type="file" id="csvFile" accept=".csv" required />
+          <div class="buttons-group">
+            <button class="btn display">Display</button>
+            <button class="btn print">Print</button>
+          </div>
+        </form>
+
+        <!-- create container -->
+        <div class="create-container">
+          <div class="error"></div>
+          <details>
+            <summary>Add new Student pass</summary>
+            <form action="" class="form">
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input
+                  type="text"
+                  name="Name"
+                  id="name"
+                  placeholder="student name"
+                />
+              </div>
+              <div class="form-group">
+                <label for="category">category</label>
+                <select id="category" name="Category">
+                  <option value="A">A</option>
+                  <option value="B">B</option>
+                  <option value="C">C</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="level">level</label>
+                <select id="level" name="Level">
+                  <option value="200">200</option>
+                  <option value="300">300</option>
+                  <option value="400">400</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="specialty">specialty</label>
+                <select name="Specialty" id="specialty">
+                  <option value="software">Software Engineering</option>
+                  <option value="graphics">Graphics Design</option>
+                  <option value="networking">networking</option>
+                  <option value="Software">Cyber security</option>
+                </select>
+              </div>
+
+              <!-- <div class="form-group">
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="password" name="password" id="confirm-password" />
+                  </div> -->
+              <button>Submit</button>
+            </form>
+          </details>
+        </div>
+      </div>
+      <div class="grids"></div>
+    </div>
+  </body>
+</html>

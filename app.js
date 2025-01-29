@@ -21,6 +21,9 @@ document.getElementById("csvFile").addEventListener("change", function (e) {
       };
 
       // console.log(jsonData);
+      document.querySelector(".group").addEventListener("submit", (e) => {
+        e.preventDefault();
+      });
 
       btn.addEventListener("click", () => {
         gridsContainer.innerHTML = "";
